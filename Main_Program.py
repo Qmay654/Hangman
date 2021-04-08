@@ -87,3 +87,52 @@ while True:
         t = 0
     else:
         break
+        
+        
+ 
+#12 Life points left
+#* * * *
+#Guess a letter or word: a
+#The letter was not in the word, you lose 1 point
+#['a']
+#11 Life points left
+#* * * *
+#Guess a letter or word: c
+#The letter was in the word
+#['a']
+#11 Life points left
+#c * * *
+#Guess a letter or word: e
+#The letter was not in the word, you lose 1 point
+#['a', 'e']
+#10 Life points left
+#c * * *
+#Guess a letter or word: b
+#The letter was not in the word, you lose 1 point
+#['a', 'e', 'b']
+#9 Life points left
+#c * * *
+#Guess a letter or word: h
+#The letter was in the word
+#['a', 'e', 'b']
+#9 Life points left
+#c h * *
+#Guess a letter or word: n
+#The letter was in the word
+#['a', 'e', 'b']
+#9 Life points left
+#c h * n
+#Guess a letter or word: i
+#The letter was in the word
+#['a', 'e', 'b']
+#9 Life points left
+#c h i n
+#Guess a letter or word: chin
+#You win! The correct word was chin
+
+#Would you like to play again? no
+
+#Process finished with exit code 0
+
+
+
