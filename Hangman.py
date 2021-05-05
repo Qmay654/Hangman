@@ -24,7 +24,7 @@ def fakeword():
         elif letter in lets:
             guess.append('_')
     guessprint = (' '.join(map(str, guess)))
-    text = Label(root, text=str(guessprint), padx=200, bg="grey")
+    text = Label(root, text=str(guessprint), padx=200, bg="#800040")
     text.config(font=("Courier", 54))
     text.grid(row=0, column=1)
 
@@ -57,7 +57,7 @@ def click():
         img.pack()
 
         # Redefining the wrong letters
-        wrong_area = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='grey')
+        wrong_area = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#800040')
         wrong_area.config(font=("Courier", 11))
         wrong_area.grid(row=1, column=0)
 
@@ -75,7 +75,7 @@ def click():
 root = Tk()
 root.title("Hangman")
 root.iconbitmap('C:/Hangman/hangman.ico')
-root.configure(bg="grey")
+root.configure(bg="#800040")
 root.geometry('1600x830')
 
 # Getting the images
@@ -128,7 +128,7 @@ button = Button(enterbox, text='Enter your guess', padx=273, command=click)
 button.pack()
 
 # Wrong letter area
-wrong_area = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='grey')
+wrong_area = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#800040')
 wrong_area.config(font=("Courier", 11))
 wrong_area.grid(row=1, column=0)
 
