@@ -76,8 +76,6 @@ root = Tk()
 root.title("Hangman")
 root.iconbitmap('C:/Hangman/hangman.ico')
 root.configure(bg="grey")
-width = root.winfo_screenwidth()
-height = root.winfo_screenheight()
 root.geometry('1600x830')
 
 # Getting the images
