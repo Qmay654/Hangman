@@ -2,28 +2,19 @@ from tkinter import *
 from PIL import ImageTk, Image
 import random
 
-realword = (random.choice(list(open('C:/Hangman/Word.txt'))))
-health = 10
-corguess = []
-wrong_let = []
-image = -1
-lets = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-        'v',
-        'w', 'x', 'y', 'z'}
-
 
 # Making hashed out version of the word
 def fakeword():
-    guess = []
+    guesslist = []
 
     for letter in realword:
         if letter == "-":
-            guess.append("-")
+            guesslist.append("-")
         elif letter in corguess:
-            guess.append(letter)
+            guesslist.append(letter)
         elif letter in lets:
-            guess.append('_')
-    guessprint = (' '.join(map(str, guess)))
+            guesslist.append('_')
+    guessprint = (' '.join(map(str, guesslist)))
     text = Label(root, text=str(guessprint), padx=200, bg="#800040")
     text.config(font=("Courier", 54))
     text.grid(row=0, column=1)
@@ -35,23 +26,45 @@ def click():
     global health
 
     guess = entry.get()
+
+    # Win
     if guess == realword[0:-1]:
+        if health == 0:
+            root.quit()
+        text = Label(root, text=str(realword), padx=200, bg="#800040")
+        text.config(font=("Courier", 54))
+        text.grid(row=0, column=1)
         textbox.insert(END, f"You Win! The word was " + realword + "\n")
+        balloon = Label(root, width=0, image=balloons, bg="#800040")
+        balloon.place(x=1250, y=0)
+
+    # Correct letter guess
     elif guess in realword:
+        if health == 0:
+            root.quit()
         textbox.insert(END, f"Your guess was " + guess + ", and it was in the word \n")
         corguess.append(guess)
         textbox.insert(END, str(health) + f" Health left \n")
         textbox.insert(END, f" \n")
     else:
 
-        textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
-        image += 1
-        health -= 1
-        wrong_let.append(guess)
+        if len(guess) > 1:
+            textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
+            health -= 3
+            if health < 0:
+                root.quit()
+            image += 3
+        else:
+            textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
+            health -= 1
+            if health < 0:
+                root.quit()
+            image += 1
+            wrong_let.append(guess)
 
         # Replacing the image
         img.pack_forget()
-        img = Label(imageholder, image=hangmanlist[image+1])
+        img = Label(imageholder, image=hangmanlist[image + 1])
         img.pack()
 
         # Redefining the wrong letters
@@ -59,8 +72,11 @@ def click():
         wrong_area.config(font=("Courier", 11))
         wrong_area.grid(row=1, column=0)
 
+        # Run out of health
         if health == 0:
+            textbox.insert(END, str(health) + f" Health left \n")
             textbox.insert(END, f"Sorry, you lose! The word was " + str(realword) + "\n")
+            textbox.insert(END, f"Press the enter or the exit button to quit the game\n")
         else:
             textbox.insert(END, str(health) + f" Health left \n")
             textbox.insert(END, f" \n")
@@ -68,6 +84,15 @@ def click():
     fakeword()
     return
 
+
+realword = (random.choice(list(open('C:/Hangman/Word.txt'))))
+health = 10
+corguess = []
+wrong_let = []
+image = -1
+lets = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+        'v',
+        'w', 'x', 'y', 'z'}
 
 # Setting up the window
 root = Tk()
@@ -88,6 +113,7 @@ hangman7 = ImageTk.PhotoImage(Image.open('C:/hangman/hangman7.png'))
 hangman8 = ImageTk.PhotoImage(Image.open('C:/hangman/hangman8.png'))
 hangman9 = ImageTk.PhotoImage(Image.open('C:/hangman/hangman9.png'))
 hangman10 = ImageTk.PhotoImage(Image.open('C:/hangman/hangman10.png'))
+balloons = ImageTk.PhotoImage(Image.open('C:/hangman/balloons.png'))
 
 # Putting the images into a list
 hangmanlist = [hangman0, hangman1, hangman2, hangman3, hangman4, hangman5, hangman6, hangman7, hangman8, hangman9,
@@ -131,10 +157,9 @@ wrong_area.config(font=("Courier", 11))
 wrong_area.grid(row=1, column=0)
 
 # Quit button
-button_quit = Button(root, text="Exit Game", command=root.quit, )
+button_quit = Button(root, text="Exit Game", command=root.quit)
 button_quit.place(x=1500, y=800)
 
 fakeword()
 
 root.mainloop()
-
