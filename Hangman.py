@@ -6,6 +6,7 @@ import random
 
 # Making hashed out version of the word
 def fakeword():
+    print(realword)
     guesslist = []
 
     for letter in realword:
@@ -21,6 +22,7 @@ def fakeword():
     text.grid(row=0, column=1)
 
 
+# The meat of the game
 def click():
     global img
     global image
@@ -90,6 +92,7 @@ def click():
     return
 
 
+# Function for losing
 def lose():
     global img
     for letter in realword:
@@ -99,6 +102,31 @@ def lose():
     textbox.insert(END, f"Sorry, you lose! The word was " + str(realword) + "\n")
     textbox.insert(END, f"Press the enter or the exit button to quit the game\n")
     playsound('C:/hangman/sad.mp3')
+    
+
+def restart():
+    global img
+    global realword
+    global health
+    global corguess
+    global wrong_let
+    global image
+
+    realword = (random.choice(list(open('C:/hangman/Word.txt'))))
+    health = 10
+    corguess = []
+    wrong_let = []
+    image = -1
+    textbox.delete('1.0', END)
+    textbox.insert(END, str(health) + f" Health left \n")
+    textbox.insert(END, f"Enter your guess below \n")
+    img.forget()
+    img = Label(imageholder, image=hangman0)
+    img.pack()
+    wrong_area2 = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#800040')
+    wrong_area2.config(font=("Courier", 11))
+    wrong_area2.grid(row=1, column=0)
+    fakeword()
 
 
 # Defining some variables
@@ -175,6 +203,10 @@ wrong_area.grid(row=1, column=0)
 # Quit button
 button_quit = Button(root, text="Exit Game", command=root.quit)
 button_quit.place(x=1500, y=800)
+
+# Restart button
+button_quit = Button(root, text="Restart", command=restart)
+button_quit.place(x=1450, y=800)
 
 fakeword()
 
