@@ -35,21 +35,19 @@ def click():
     global health
 
     guess = entry.get()
-    if guess in realword:
+    if guess == realword[0:-1]:
+        textbox.insert(END, f"You Win! The word was " + realword + "\n")
+    elif guess in realword:
         textbox.insert(END, f"Your guess was " + guess + ", and it was in the word \n")
         corguess.append(guess)
         textbox.insert(END, str(health) + f" Health left \n")
         textbox.insert(END, f" \n")
     else:
+
         textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
         image += 1
         health -= 1
         wrong_let.append(guess)
-
-        # Replacing the image
-        img.pack_forget()
-        img = Label(imageholder, image=hangmanlist[image+1])
-        img.pack()
 
         # Replacing the image
         img.pack_forget()
@@ -62,7 +60,7 @@ def click():
         wrong_area.grid(row=1, column=0)
 
         if health == 0:
-            textbox.insert(END, f" Sorry, you lose! The word was " + str(realword) + "\n")
+            textbox.insert(END, f"Sorry, you lose! The word was " + str(realword) + "\n")
         else:
             textbox.insert(END, str(health) + f" Health left \n")
             textbox.insert(END, f" \n")
@@ -139,3 +137,4 @@ button_quit.place(x=1500, y=800)
 fakeword()
 
 root.mainloop()
+
