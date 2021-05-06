@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
+from playsound import playsound
 import random
 
 
@@ -31,12 +32,13 @@ def click():
     if guess == realword[0:-1]:
         if health == 0:
             root.quit()
-        text = Label(root, text=str(realword), padx=200, bg="#800040")
-        text.config(font=("Courier", 54))
-        text.grid(row=0, column=1)
+        for letter in guess:
+            corguess.append(letter)
+        fakeword()
         textbox.insert(END, f"You Win! The word was " + realword + "\n")
         balloon = Label(root, width=0, image=balloons, bg="#800040")
         balloon.place(x=1250, y=0)
+        playsound('C:/hangman/Horn.wav')
 
     # Correct letter guess
     elif guess in realword:
@@ -48,6 +50,7 @@ def click():
         textbox.insert(END, f" \n")
     else:
 
+        # If guess is bigger than 1
         if len(guess) > 1:
             textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
             health -= 3
@@ -55,6 +58,8 @@ def click():
                 root.quit()
             image += 3
         else:
+
+            # If guess is only 1 long
             textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
             health -= 1
             if health < 0:
@@ -68,15 +73,19 @@ def click():
         img.pack()
 
         # Redefining the wrong letters
-        wrong_area = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#800040')
-        wrong_area.config(font=("Courier", 11))
-        wrong_area.grid(row=1, column=0)
+        wrong_area2 = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#800040')
+        wrong_area2.config(font=("Courier", 11))
+        wrong_area2.grid(row=1, column=0)
 
         # Run out of health
         if health == 0:
+            for letter in realword:
+                corguess.append(letter)
+            fakeword()
             textbox.insert(END, str(health) + f" Health left \n")
             textbox.insert(END, f"Sorry, you lose! The word was " + str(realword) + "\n")
             textbox.insert(END, f"Press the enter or the exit button to quit the game\n")
+            playsound('C:/hangman/sad.mp3')
         else:
             textbox.insert(END, str(health) + f" Health left \n")
             textbox.insert(END, f" \n")
@@ -85,6 +94,7 @@ def click():
     return
 
 
+# Defining some variables
 realword = (random.choice(list(open('C:/Hangman/Word.txt'))))
 health = 10
 corguess = []
@@ -136,7 +146,6 @@ scrollbar = Scrollbar(enterbox)
 scrollbar.pack(side=RIGHT, fill=Y)
 textbox = Text(enterbox)
 textbox.pack()
-textbox.insert(END, realword + f" \n")
 textbox.insert(END, str(health) + f" Health left \n")
 textbox.insert(END, f"Enter your guess below \n")
 # Attach textbox to scrollbar
