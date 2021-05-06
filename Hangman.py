@@ -95,7 +95,7 @@ def click():
 
 
 # Defining some variables
-realword = (random.choice(list(open('C:/Hangman/Word.txt'))))
+realword = (random.choice(list(open('C:/hangman/Word.txt'))))
 health = 10
 corguess = []
 wrong_let = []
@@ -107,7 +107,7 @@ lets = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o
 # Setting up the window
 root = Tk()
 root.title("Hangman")
-root.iconbitmap('C:/Hangman/hangman.ico')
+root.iconbitmap('C:/hangman/hangman.ico')
 root.configure(bg="#800040")
 root.geometry('1600x830')
 
