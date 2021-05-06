@@ -6,7 +6,6 @@ import random
 
 # Making hashed out version of the word
 def fakeword():
-    print(realword)
     guesslist = []
 
     for letter in realword:
