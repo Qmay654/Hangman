@@ -55,8 +55,10 @@ def click():
             textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
             health -= 3
             if health < 0:
-                root.quit()
+                lose()
             image += 3
+            if image > 10:
+                image = 9
         else:
 
             # If guess is only 1 long
@@ -79,19 +81,24 @@ def click():
 
         # Run out of health
         if health == 0:
-            for letter in realword:
-                corguess.append(letter)
-            fakeword()
-            textbox.insert(END, str(health) + f" Health left \n")
-            textbox.insert(END, f"Sorry, you lose! The word was " + str(realword) + "\n")
-            textbox.insert(END, f"Press the enter or the exit button to quit the game\n")
-            playsound('C:/hangman/sad.mp3')
+            lose()
         else:
             textbox.insert(END, str(health) + f" Health left \n")
             textbox.insert(END, f" \n")
 
     fakeword()
     return
+
+
+def lose():
+    global img
+    for letter in realword:
+        corguess.append(letter)
+    fakeword()
+    textbox.insert(END, str(health) + f" Health left \n")
+    textbox.insert(END, f"Sorry, you lose! The word was " + str(realword) + "\n")
+    textbox.insert(END, f"Press the enter or the exit button to quit the game\n")
+    playsound('C:/hangman/sad.mp3')
 
 
 # Defining some variables
