@@ -16,6 +16,11 @@ def fakeword():
         elif letter in lets:
             guesslist.append('_')
     guessprint = (' '.join(map(str, guesslist)))
+    if "_" not in guesslist:
+        textbox.insert(END, f"You Win! The word was " + realword + "\n")
+        balloon = Label(root, width=0, image=balloons, bg="#800040")
+        balloon.place(x=1250, y=0)
+        playsound('C:/hangman/Horn.wav')
     text = Label(root, text=str(guessprint), padx=200, bg="#800040")
     text.config(font=("Courier", 54))
     text.grid(row=0, column=1)
@@ -101,7 +106,7 @@ def lose():
     textbox.insert(END, f"Sorry, you lose! The word was " + str(realword) + "\n")
     textbox.insert(END, f"Press the enter or the exit button to quit the game\n")
     playsound('C:/hangman/sad.mp3')
-    
+
 
 def restart():
     global img
