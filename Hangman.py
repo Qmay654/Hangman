@@ -6,6 +6,7 @@ import random
 
 # Making hashed out version of the word
 def fakeword():
+    global guessprint
     guesslist = []
 
     for letter in realword:
@@ -16,11 +17,6 @@ def fakeword():
         elif letter in lets:
             guesslist.append('_')
     guessprint = (' '.join(map(str, guesslist)))
-    if "_" not in guesslist:
-        textbox.insert(END, f"You Win! The word was " + realword + "\n")
-        balloon = Label(root, width=0, image=balloons, bg="#800040")
-        balloon.place(x=1250, y=0)
-        playsound('C:/hangman/Horn.wav')
     text = Label(root, text=str(guessprint), padx=200, bg="#800040")
     text.config(font=("Courier", 54))
     text.grid(row=0, column=1)
@@ -41,6 +37,10 @@ def click():
         for letter in guess:
             corguess.append(letter)
         fakeword()
+        textbox.insert(END, f"You Win! The word was " + realword + "\n")
+        balloon = Label(root, width=0, image=balloons, bg="#800040")
+        balloon.place(x=1250, y=0)
+        playsound('C:/hangman/Horn.wav')
 
     # Correct letter guess
     elif guess in realword:
@@ -49,6 +49,13 @@ def click():
         textbox.insert(END, f"Your guess was " + guess + ", and it was in the word \n")
         corguess.append(guess)
         textbox.insert(END, str(health) + f" Health left \n")
+        fakeword()
+        if "_" not in guessprint:
+            fakeword()
+            textbox.insert(END, f"You Win! The word was " + realword + "\n")
+            balloon = Label(root, width=0, image=balloons, bg="#800040")
+            balloon.place(x=1250, y=0)
+            playsound('C:/hangman/Horn.wav')
         textbox.insert(END, f" \n")
     else:
 
@@ -139,6 +146,7 @@ lets = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o
         'v',
         'w', 'x', 'y', 'z'}
 
+print(realword)
 # Setting up the window
 root = Tk()
 root.title("Hangman")
