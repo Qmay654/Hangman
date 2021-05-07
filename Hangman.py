@@ -41,10 +41,6 @@ def click():
         for letter in guess:
             corguess.append(letter)
         fakeword()
-        textbox.insert(END, f"You Win! The word was " + realword + "\n")
-        balloon = Label(root, width=0, image=balloons, bg="#800040")
-        balloon.place(x=1250, y=0)
-        playsound('C:/hangman/Horn.wav')
 
     # Correct letter guess
     elif guess in realword:
