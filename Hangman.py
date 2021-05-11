@@ -9,6 +9,7 @@ def fakeword():
     global guessprint
     guesslist = []
 
+    # Making the word
     for letter in realword:
         if letter == "-":
             guesslist.append("-")
@@ -17,9 +18,11 @@ def fakeword():
         elif letter in lets:
             guesslist.append('_')
     guessprint = (' '.join(map(str, guesslist)))
-    text = Label(root, text=str(guessprint), padx=200, bg="#800040")
+
+    # Placing the word onto the screen
+    text = Label(root, text=str(guessprint), padx=200, bg="#c40062")
     text.config(font=("Courier", 54))
-    text.grid(row=0, column=1)
+    text.place(x=425, y=250)
 
 
 # The meat of the game
@@ -30,7 +33,7 @@ def click():
 
     guess = entry.get()
 
-    # Win
+    # Correct word guess
     if guess == realword[0:-1]:
         if health == 0:
             root.quit()
@@ -38,7 +41,7 @@ def click():
             corguess.append(letter)
         fakeword()
         textbox.insert(END, f"You Win! The word was " + realword + "\n")
-        balloon = Label(root, width=0, image=balloons, bg="#800040")
+        balloon = Label(root, width=0, image=balloons, bg="#c40062")
         balloon.place(x=1250, y=0)
         playsound('C:/hangman/Horn.wav')
 
@@ -53,13 +56,13 @@ def click():
         if "_" not in guessprint:
             fakeword()
             textbox.insert(END, f"You Win! The word was " + realword + "\n")
-            balloon = Label(root, width=0, image=balloons, bg="#800040")
+            balloon = Label(root, width=0, image=balloons, bg="#c40062")
             balloon.place(x=1250, y=0)
             playsound('C:/hangman/Horn.wav')
         textbox.insert(END, f" \n")
     else:
 
-        # If guess is bigger than 1
+        # If wrong guess is bigger than 1
         if len(guess) > 1:
             textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
             health -= 3
@@ -70,7 +73,7 @@ def click():
                 image = 9
         else:
 
-            # If guess is only 1 long
+            # If wrong guess is only 1 long
             textbox.insert(END, f"Your guess was " + guess + ", and it was not in the word \n")
             health -= 1
             if health < 0:
@@ -84,9 +87,9 @@ def click():
         img.pack()
 
         # Redefining the wrong letters
-        wrong_area2 = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#800040')
+        wrong_area2 = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#c40062')
         wrong_area2.config(font=("Courier", 11))
-        wrong_area2.grid(row=1, column=0)
+        wrong_area2.place(x=20, y=565)
 
         # Run out of health
         if health == 0:
@@ -111,6 +114,7 @@ def lose():
     playsound('C:/hangman/sad.mp3')
 
 
+# Redefining the variables as they were in the beginning so you can start again
 def restart():
     global img
     global realword
@@ -119,20 +123,31 @@ def restart():
     global wrong_let
     global image
 
+    # Redoing the variables
     realword = (random.choice(list(open('C:/hangman/Word.txt'))))
     health = 10
     corguess = []
     wrong_let = []
     image = -1
+
+    # Clearing the textbox
     textbox.delete('1.0', END)
     textbox.insert(END, str(health) + f" Health left \n")
     textbox.insert(END, f"Enter your guess below \n")
+
+    # Redoing the image
     img.forget()
     img = Label(imageholder, image=hangman0)
     img.pack()
-    wrong_area2 = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#800040')
+
+    # Redoing the wrong letter area
+    wrong_area2 = Label(root, text='Wrong guesses are: _ _ _ _ _ _ _ _ _ _', bg='#c40062')
     wrong_area2.config(font=("Courier", 11))
-    wrong_area2.grid(row=1, column=0)
+    wrong_area2.place(x=20, y=565)
+
+    # Covering up the balloons
+    noballoon = Label(root, width=0, image=noballoons, bg="#c40062")
+    noballoon.place(x=1250, y=0)
     fakeword()
 
 
@@ -150,7 +165,7 @@ lets = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o
 root = Tk()
 root.title("Hangman")
 root.iconbitmap('C:/hangman/hangman.ico')
-root.configure(bg="#800040")
+root.configure(bg="#c40062")
 root.geometry('1600x830')
 
 # Getting the images
@@ -166,6 +181,7 @@ hangman8 = ImageTk.PhotoImage(Image.open('C:/hangman/hangman8.png'))
 hangman9 = ImageTk.PhotoImage(Image.open('C:/hangman/hangman9.png'))
 hangman10 = ImageTk.PhotoImage(Image.open('C:/hangman/hangman10.png'))
 balloons = ImageTk.PhotoImage(Image.open('C:/hangman/balloons.png'))
+noballoons = ImageTk.PhotoImage(Image.open('C:/hangman/noballoons.png'))
 
 # Putting the images into a list
 hangmanlist = [hangman0, hangman1, hangman2, hangman3, hangman4, hangman5, hangman6, hangman7, hangman8, hangman9,
@@ -203,9 +219,9 @@ button = Button(enterbox, text='Enter your guess', padx=273, command=click)
 button.pack()
 
 # Wrong letter area
-wrong_area = Label(root, text='Wrong guesses are: ' + ' '.join(wrong_let), bg='#800040')
+wrong_area = Label(root, text='Wrong guesses are: _ _ _ _ _ _ _ _ _ _', bg='#c40062')
 wrong_area.config(font=("Courier", 11))
-wrong_area.grid(row=1, column=0)
+wrong_area.place(x=20, y=565)
 
 # Quit button
 button_quit = Button(root, text="Exit Game", command=root.quit)
