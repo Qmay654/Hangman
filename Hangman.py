@@ -31,7 +31,7 @@ def click():
     global image
     global health
 
-    guess = entry.get()
+    guess = entry.get().lower()
 
     # Correct word guess
     if guess == realword[0:-1]:
